@@ -11,7 +11,6 @@ public class Personne{
     private final GregorianCalendar dateNaissance;
     private Adresse adresse=ADRESSE_INCONNUE;
 	private int nb_personne=0;
-	private int age=0;
 	
 	/**
 	 * Constructeur de Personne
@@ -101,13 +100,8 @@ public class Personne{
 		return nb_personne;
 	}
 
-	public int getAge() {
-		return age;
-	}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+
 
 	/**
 	 * Compare l'age de deux personnes
@@ -116,10 +110,31 @@ public class Personne{
 	 */
 	public boolean plusAgeeQue(Personne autrePersonne){
 		boolean resultat = false;
-		if (age > autrePersonne.getAge()) {
+		if (dateNaissance.compareTo(autrePersonne.getDateNaissance()) > 0) {
 			resultat = true;
 		}
 		return resultat;
+	}
+
+	public boolean plusAgee(Personne personne1, Personne personne2){
+		boolean resultat = false;
+		if (personne1.getDateNaissance().compareTo(personne2.getDateNaissance()) > 0) {
+			resultat = true;
+		}
+		return resultat;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Personne personne = (Personne) o;
+		return nb_personne == personne.nb_personne && Objects.equals(nom, personne.nom) && Objects.equals(prenom, personne.prenom) && Objects.equals(dateNaissance, personne.dateNaissance);
+	}
+
+	@Override
+	public int hashCode() {
+		return 0;
 	}
 }
 
