@@ -5,6 +5,8 @@ package main;
  * by Marie-Laure Nivet
  */
 
+import java.util.Objects;
+
 /**
  * Classe Adrese servant à modéliser les informations contenues dans une adresse
  * @author nivet_m
@@ -126,5 +128,18 @@ public class Adresse {
 		else result.append(" Code postal inconnu ");
 		result.append(ville);
 		return result.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Adresse adresse = (Adresse) o;
+		return numero == adresse.numero && Objects.equals(rue, adresse.rue) && Objects.equals(code_postal, adresse.code_postal) && Objects.equals(ville, adresse.ville);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(numero, rue, code_postal, ville);
 	}
 }

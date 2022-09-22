@@ -1,5 +1,6 @@
 package main;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -8,9 +9,9 @@ public class Personne{
     private static final Adresse ADRESSE_INCONNUE = null;
     private String nom;
     private String prenom;
-    private final GregorianCalendar dateNaissance;
+    protected LocalDate dateNaissance = LocalDate.of(1800, 1, 1);
     private Adresse adresse=ADRESSE_INCONNUE;
-	private int nb_personne=0;
+	private static int nb_personne=0;
 	
 	/**
 	 * Constructeur de Personne
@@ -19,10 +20,17 @@ public class Personne{
 	 * @param laDate la date de naissance de la personne
 	 * @param lAdresse l'adresse de la personne
 	 */
-	public Personne(String leNom,String lePrenom, GregorianCalendar laDate, Adresse lAdresse){
+	public Personne(String leNom,String lePrenom, LocalDate laDate, Adresse lAdresse){
 		nom = leNom.toUpperCase();
 		prenom=lePrenom;
 		dateNaissance=laDate;
+		adresse=lAdresse;
+		nb_personne += 1;
+	}
+
+	public Personne(String leNom, String lePrenom, Adresse lAdresse){
+		nom = leNom.toUpperCase();
+		prenom=lePrenom;
 		adresse=lAdresse;
 		nb_personne += 1;
 	}
@@ -39,8 +47,10 @@ public class Personne{
 	 * @param code_postal le code postal de l'adresse
 	 * @param ville la ville ou la personne habite
 	 */
-	public Personne(String leNom,String lePrenom, int j, int m, int a, int numero, String rue, String code_postal, String ville){
-		this(leNom, lePrenom, new GregorianCalendar(a,m,j),new Adresse(numero,rue,code_postal,ville));
+	public Personne(String leNom,String lePrenom, int j, int m, int a, int numero, String rue, String code_postal,
+					String ville){
+
+		this(leNom, lePrenom, LocalDate.of(a, m, j),new Adresse(numero,rue,code_postal,ville));
 	}
 
 	/**
@@ -59,9 +69,9 @@ public class Personne{
 	}
 	/**
 	 * Accesseur
-	 * @return retourne la date de naissance	 
+	 * @return retourne la date de naissance
 	 */
-	public GregorianCalendar getDateNaissance() {
+	public LocalDate getDateNaissance() {
 		return dateNaissance;
 	}
 	/**
@@ -81,15 +91,16 @@ public class Personne{
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString(){
-		String result="\nNom : "+nom+"\n"
-		+"Pr�nom : "+prenom+"\n"+
-		"N�(e) le : "+dateNaissance.get(Calendar.DAY_OF_MONTH)+
-		"-"+dateNaissance.get(Calendar.MONTH)+
-		"-"+dateNaissance.get(Calendar.YEAR)+"\n"+
-		"Adresse : "+
-		adresse.toString();
-		return result;
+
+	@Override
+	public String toString() {
+		return "Personne{" +
+				"nom='" + nom + '\'' +
+				", prenom='" + prenom + '\'' +
+				", dateNaissance=" + dateNaissance +
+				", adresse=" + adresse +
+				", nb_personne=" + nb_personne +
+				'}';
 	}
 
 	/**
@@ -110,7 +121,7 @@ public class Personne{
 	 */
 	public boolean plusAgeeQue(Personne autrePersonne){
 		boolean resultat = false;
-		if (dateNaissance.compareTo(autrePersonne.getDateNaissance()) > 0) {
+		if (dateNaissance.compareTo(autrePersonne.getDateNaissance()) < 0) {
 			resultat = true;
 		}
 		return resultat;
