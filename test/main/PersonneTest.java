@@ -33,11 +33,10 @@ class PersonneTest {
     @Test
     void lambdaExpressions() {
         int[] numbers = {0, 1, 2, 3, 4};
-        assertAll("numbers",
-                () -> assertEquals(numbers[0], 0),
-                () -> assertEquals(numbers[3], 3),
-                () -> assertEquals(numbers[4], 4)
-        );
+        for (int i = 0; i < 5; i++) {
+            assertEquals(numbers[i], i);
+        }
+
     }
 
     @Test
